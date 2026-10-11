@@ -94,7 +94,7 @@ Use `--scene path/to/scene.json`, `--texture path/to/texture.ppm`, `--width`, `-
 src/                    C++ renderer, geometry, math and image I/O
 scenes/demo.json        Supplied Blender-exported scene
 assets/stone.ppm         Supplied texture, stored as binary P6
-blender/                Original scene and portable export script
+blender/                Portable scene export script
 scripts/                Example rendering and image conversion
 tests/                  Render, traversal and CLI regression checks
 docs/                   Architecture notes and original render gallery
@@ -103,10 +103,10 @@ docs/                   Architecture notes and original render gallery
 
 ## Blender workflow
 
-Open `blender/demo.blend`, load `blender/export_scene.py` in Blender's Text Editor and run it. The script writes `demo.json` next to the saved blend file. Pass that path to the renderer:
+The demo scene is supplied as `scenes/demo.json`. To export your own scene, save it in Blender, load `blender/export_scene.py` in Blender's Text Editor and run it. The script writes `demo.json` next to the saved blend file. Pass the exported path to the renderer:
 
 ```bash
-./build/ray --scene blender/demo.json --output output/blender_scene.ppm
+./build/ray --scene path/to/demo.json --output output/blender_scene.ppm
 ```
 
 Meshes are identified by names containing `Sphere`, `Cube` or `Plane`; point lights and cameras are exported. The scene loader expects the exporter's four-space pretty-printed format. It is a small coursework parser, so arbitrary JSON formatting, general meshes and imported materials are outside its current scope. Blender's exported depth-of-field metadata is not consumed; use the renderer's CLI controls.
@@ -121,6 +121,6 @@ The checks render a small scene, validate the PPM payload, compare BVH and linea
 
 ## Project history and scope
 
-This repository packages the final integrated coursework renderer rather than the intermediate labs. The gallery contains the original coursework PNGs; the texture's pixels are preserved while its storage changes from ASCII P3 to binary P6. Packaging also adds portable paths, build configuration, repeatable checks and small CLI/I/O fixes.
+This repository packages the final integrated coursework renderer rather than the intermediate labs. The gallery preserves the original coursework pixels, with image metadata removed; the texture's pixels are preserved while its storage changes from ASCII P3 to binary P6. Packaging also adds portable paths, build configuration, repeatable checks and small CLI/I/O fixes.
 
 This is a single-threaded educational Whitted renderer. Shadow queries remain linear, planes also receive a direct intersection pass, glossy sampling is applied only to the first reflection, and materials are defined in the primitive classes. See the [implementation notes](docs/architecture.md) for those trade-offs.

@@ -1,0 +1,12 @@
+.DS_Store
+.vscode/
+.idea/
+__pycache__/
+*.py[cod]
+build/
+output/
+*.o
+*.d
+*.blend1
+blender/*.blend
+ray
